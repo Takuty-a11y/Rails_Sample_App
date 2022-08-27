@@ -9,9 +9,7 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password,  presence: true,
-                        length: {minimum: 6},
-                        allow_nil: true
+  validates :password,  presence: true, length: {minimum: 6}, allow_nil: true
   
   class << self
     # 渡された文字列のハッシュ値を返す
@@ -46,9 +44,8 @@ class User < ApplicationRecord
   
   # アカウントを有効にする
   def activate
-    update_columns(activated: true, activated_at: Time.zone.now)
-    # update_attribute(:activated,    true)
-    # update_attribute(:activated_at, Time.zone.now)
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
   end
 
   # 有効化用のメールを送信する
