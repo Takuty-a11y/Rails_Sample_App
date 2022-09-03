@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2022_09_03_065034) do
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "\"user_id\", \"create_at\"", name: "index_microposts_on_user_id_and_create_at"
+    t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
