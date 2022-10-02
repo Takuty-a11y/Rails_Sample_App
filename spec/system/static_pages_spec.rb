@@ -1,0 +1,33 @@
+require 'rails_helper'
+
+RSpec.describe "StaticPages", type: :system do
+  before do
+    driven_by(:rack_test)
+  end
+
+  describe "root" do
+    it "ページリンクが正しく表示されること" do
+      visit root_path
+      link_to_root = page.find_all("a[href=\"#{root_path}\"]")
+      
+      expect(link_to_root.size).to eq 2
+      expect(page).to have_link "Help", href: help_path
+      expect(page).to have_link "About", href: about_path
+      expect(page).to have_link "Contact", href: contact_path
+    end
+  end
+  
+  describe "home" do
+    it "followingとfollowersが正しくひょうじされること" do
+      user = FactoryBot.send(:create_relationships)
+      log_in user
+      
+      expect(page).to have_content '10 following'
+      expect(page).to have_content '10 followers'
+  
+      visit user_path(user)
+      expect(page).to have_content '10 following'
+      expect(page).to have_content '10 followers'
+    end
+  end
+end
